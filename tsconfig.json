@@ -1,0 +1,15 @@
+{
+	"extends": "./tsconfig.paths.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node",
+
+		"esModuleInterop": true,
+		"strict": true,
+		"noErrorTruncation": true,
+
+		"lib": ["esnext"]
+	},
+	"include": ["src/**/*"]
+}

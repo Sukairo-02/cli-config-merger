@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "paths": {
+            "@Controllers/*": ["controllers/*"],
+            "@Services/*": ["services/*"],
+            "@Middleware/*": ["middleware/*"],
+            "@Utils/*": ["utils/*"],
+            "@Database/*": ["db/*"],
+            "@Repos/*": ["repositories/*"],
+            "@Globals/*": ["globals/*"]
+        }
+    }
+}

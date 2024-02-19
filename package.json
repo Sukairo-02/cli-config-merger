@@ -1,0 +1,14 @@
+{
+	"name": "readable-zod-error",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./src/index.ts",
+	"scripts": {
+		"dev": "tsx src/index.ts"
+	},
+	"devDependencies": {
+		"tsx": "^4.7.0",
+		"typescript": "latest"
+	},
+	"dependencies": {}
+}
