@@ -52,8 +52,6 @@ export function parseObject<TSchema extends ObjectSchema>(
 	for (const key of schemaKeys) {
 		if (!objectKeys.has(key) && !schema[key].isOptional) {
 			errors.push(`Missing key "${key}".`)
-
-			object[key] = undefined
 		}
 	}
 
@@ -139,6 +137,7 @@ export function parseObjectMultiSchema<TUnionSchemas extends ObjectSchema[], TIn
 		let maxLen = 0
 		const msgs: string[] = []
 
+		// Prettier errors, mark what user has already passed in
 		for (const currentSet of keySets) {
 			const localMsgs: string[] = []
 

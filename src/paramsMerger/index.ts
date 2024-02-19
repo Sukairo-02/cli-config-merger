@@ -29,7 +29,7 @@ export function parseParams<
 	TIntersectionSchema extends ObjectSchema
 >(
 	cliSchemas: TCliParams,
-	configLoader: ConfigLoader,
+	configLoader: ConfigLoader = () => ({}),
 	schemas: { unions: TUnionSchemas; intersect: TIntersectionSchema }
 ): Intersect<SchemaOutput<TUnionSchemas>, SchemaOutput<TIntersectionSchema>> {
 	const parsedCli = parseCliParams(cliSchemas)
