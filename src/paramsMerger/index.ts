@@ -1,5 +1,7 @@
-import { parseCliParams, type ConfigLoader, type MergedRecords, type ValidatedCliSchemas } from 'cliParser'
+import { parseCliParams, type MergedRecords, type ValidatedCliSchemas, ExtractCliParamsOutput } from 'cliParser'
 import { parseObjectMultiSchema, type Intersect, type ObjectSchema, type SchemaOutput } from 'schemaParser'
+
+import type { ConfigLoader } from './types'
 
 function mergeWithoutOverrides<TCliParams extends Record<AnyKey, any>, TConfigParams extends Record<AnyKey, any>>(
 	cli: TCliParams,
@@ -29,11 +31,11 @@ export function parseParams<
 	TIntersectionSchema extends ObjectSchema
 >(
 	cliSchemas: TCliParams,
-	configLoader: ConfigLoader = () => ({}),
+	configLoader: ConfigLoader<ExtractCliParamsOutput<TCliParams>> = () => ({}),
 	schemas: { unions: TUnionSchemas; intersect: TIntersectionSchema }
 ): Intersect<SchemaOutput<TUnionSchemas>, SchemaOutput<TIntersectionSchema>> {
 	const parsedCli = parseCliParams(cliSchemas)
-	const config = configLoader()
+	const config = configLoader(parsedCli)
 
 	const merged = mergeWithoutOverrides(parsedCli, config)
 

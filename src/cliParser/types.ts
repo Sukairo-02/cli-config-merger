@@ -69,7 +69,10 @@ export type ExtractCliValueType<T extends CliSchemaValueType> = T extends 'strin
 
 export type TrimDashes<Source extends string> = Source extends `-${infer Tail}` ? TrimDashes<Tail> : Source
 
-export type ExtractedCliSchemas<TCliSchemas extends CliSchemas, TCliSchema extends CliSchema = TCliSchemas[number]> = {
+export type ExtractCliParamsOutput<
+	TCliSchemas extends CliSchemas,
+	TCliSchema extends CliSchema = TCliSchemas[number]
+> = {
 	[K in Extract<TCliSchema, { isRequired: false }> as TrimDashes<K['name']>]?: ExtractCliValueType<K['type']>
 } & {
 	[K in Extract<TCliSchema, { isRequired: true }> as TrimDashes<K['name']>]: ExtractCliValueType<K['type']>
@@ -91,8 +94,6 @@ export type LoadedConfigParams = Record<AnyKey, any>
 export type MergedRecords<T extends Record<AnyKey, any>, U extends Record<AnyKey, any>> = {
 	[K in keyof T]: T[K] extends never ? U[K] : T[K]
 }
-
-export type ConfigLoader = () => Record<AnyKey, any>
 
 export type CliSchemaDuplicateErrorStorage<
 	TCliSchemas extends CliSchemas,

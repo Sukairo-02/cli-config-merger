@@ -9,7 +9,7 @@ import type {
 	CommonCliSchemaTypeErrorStorage,
 	CommonExtractedCliSchemas,
 	ExtractCliValueType,
-	ExtractedCliSchemas,
+	ExtractCliParamsOutput,
 	TrimDashes,
 	ValidatedCliSchemas,
 	CliSchemaStringTemplate
@@ -92,7 +92,7 @@ export function buildCliSchemaFromTemplate<
 
 export function parseCliParams<TCliSchemas extends ValidatedCliSchemas>(
 	schemas: TCliSchemas
-): ExtractedCliSchemas<TCliSchemas> {
+): ExtractCliParamsOutput<TCliSchemas> {
 	let procargs = JSON.parse(JSON.stringify(process.argv)) as string[]
 
 	const sortedByOccurence: CommonCliSchemaSingleAlias[] = []
