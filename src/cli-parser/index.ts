@@ -1,8 +1,4 @@
 import type {
-	CliSchema,
-	CliSchemaName,
-	BuildCliSchemaSchemaFromString,
-	CliSchemaValueType,
 	CliSchemas,
 	CommonCliSchemaDuplicateErrorStorage,
 	CommonCliSchemaSingleAlias,
@@ -11,8 +7,7 @@ import type {
 	ExtractCliValueType,
 	ExtractCliParamsOutput,
 	TrimDashes,
-	ValidatedCliSchemas,
-	CliSchemaStringTemplate
+	ValidatedCliSchemas
 } from './types'
 
 const startDashesRegExp = new RegExp(/^-*/)
@@ -49,45 +44,6 @@ export function validateCliSchemaCollection<TCliSchemas extends CliSchemas>(
 
 		throw new Error(message)
 	}
-}
-
-/**
- * @deprecated Requested for deletion
- */
-export function buildCliSchemaFromTemplate<
-	TTemplate extends CliSchemaStringTemplate,
-	TResult = BuildCliSchemaSchemaFromString<TTemplate>[]
->(presets: TTemplate[]): TResult extends any[] ? ValidatedCliSchemas<TResult> : never {
-	const result: CliSchema[] = []
-
-	for (const preset of presets) {
-		const [aliasZone, typeZone] = preset.split(' ')
-
-		const aliases = aliasZone.split('').filter((alias) => !!alias) as [CliSchemaName, ...CliSchemaName[]]
-		const name = aliases.shift()!
-
-		const isRequired = typeZone.startsWith('!')
-		const type = typeZone.slice(1) as CliSchemaValueType
-
-		if (aliases.length) {
-			result.push({
-				name,
-				aliases,
-				type,
-				isRequired
-			})
-		} else {
-			result.push({
-				name,
-				type,
-				isRequired
-			})
-		}
-	}
-
-	validateCliSchemaCollection(result)
-
-	return result as any
 }
 
 export function parseCliParams<TCliSchemas extends ValidatedCliSchemas>(

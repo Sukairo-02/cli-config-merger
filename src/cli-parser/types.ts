@@ -107,13 +107,6 @@ export type CliSchemaTypeErrorBody<TValueType extends CliSchemaValueType = CliSc
 	receivedValue: any
 }
 
-export type CliSchemaTypeErrorStorage<
-	TCliSchemas extends CliSchemas,
-	TCliSchema extends CliSchema = TCliSchemas[number]
-> = {
-	[Param in TCliSchema as ExtractAliasesFromParam<Param>]?: CliSchemaTypeErrorBody<Param['type']>
-}
-
 /**
  * Variation meant for usage inside generic functions where string literal types are unclear.
  *
@@ -135,55 +128,3 @@ export type CommonCliSchemaDuplicateErrorStorage = {
 export type CommonCliSchemaTypeErrorStorage = {
 	[Param in string]?: CliSchemaTypeErrorBody
 }
-
-/**
- * @deprecated Requested for deletion
- */
-export type CliSchemaSchemaTypeAnnotation = '!' | '?'
-
-/**
- * @deprecated Requested for deletion
- */
-export type ExtractCliSchemaNameAndAliasesFromString<TTemplate extends CliSchemaName> =
-	TTemplate extends `${infer Name extends CliSchemaName}|${infer Aliases extends CliSchemaName}`
-		? Aliases extends ''
-			? {
-					name: Name
-			  }
-			: {
-					name: Name
-					aliases: ExtractCliSchemaAliasesFromString<Aliases>
-			  }
-		: never
-
-/**
- * @deprecated Requested for deletion
- */
-export type CliSchemaStringTemplate = `${CliSchemaName} ${CliSchemaSchemaTypeAnnotation}${CliSchemaValueType}`
-
-/**
- * @deprecated Requested for deletion
- */
-export type ExtractCliSchemaAliasesFromString<TTemplate extends string> =
-	TTemplate extends `${infer Alias extends CliSchemaName}|${infer Tail}`
-		? [Alias, ...ExtractCliSchemaAliasesFromString<Tail>]
-		: TTemplate extends `${infer Alias}`
-		? [Alias]
-		: never
-
-/**
- * @deprecated Requested for deletion
- */
-export type BuildCliSchemaSchemaFromString<TTemplate extends CliSchemaStringTemplate> =
-	TTemplate extends `${infer Aliases extends CliSchemaName} ${infer Optional extends CliSchemaSchemaTypeAnnotation}${infer Type extends CliSchemaValueType}`
-		? CliSchema<
-				ExtractCliSchemaNameAndAliasesFromString<Aliases>['name'],
-				ExtractCliSchemaNameAndAliasesFromString<Aliases> extends {
-					aliases: infer R extends Array<CliSchemaName>
-				}
-					? R
-					: undefined,
-				Type,
-				Optional extends '!' ? true : false
-		  >
-		: never

@@ -1,5 +1,5 @@
-import { parseCliParams, type MergedRecords, type ValidatedCliSchemas, ExtractCliParamsOutput } from 'cliParser'
-import { parseObjectMultiSchema, type Intersect, type ObjectSchema, type SchemaOutput } from 'schemaParser'
+import { parseCliParams, type MergedRecords, type ValidatedCliSchemas, ExtractCliParamsOutput } from 'cli-parser'
+import { parseObjectMultiSchema, type Intersect, type ObjectSchema, type SchemaOutput } from 'schema-parser'
 
 import type { ConfigLoader } from './types'
 
